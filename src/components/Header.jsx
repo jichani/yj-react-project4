@@ -13,9 +13,9 @@ const GNB = [
 
 export default function Header() {
   return (
-    <div className="w-full flex justify-center h-[200px] shadow-md ">
+    <div className="w-full flex justify-center h-header-height shadow-md ">
       {/* 좌우 여백을 위한 박스 */}
-      <div className="w-full flex justify-center px-[80px]">
+      <div className="w-full flex justify-center px-layout-padding">
         <div className="w-full flex justify-center relative">
           {/* 메뉴리스트 */}
           <div className="w-full flex justify-center items-center space-x-8">

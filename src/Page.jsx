@@ -1,10 +1,14 @@
+import CarouselMain from "./components/CarouselMain";
 import Layout from "./components/Layout";
 
 export default function Page() {
   return (
     <>
       <Layout>
-        <div>메인페이지</div>
+        {/* 메인 캐러셀 이미지 */}
+        <div className="w-full h-screen-minus-header overflow-hidden">
+          <CarouselMain />
+        </div>
       </Layout>
     </>
   );
