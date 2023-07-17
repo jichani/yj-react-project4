@@ -1,10 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ButtonSlide from "../components/ButtonSlide";
 import Layout from "../components/Layout";
 import LayoutContents from "../components/LayoutContents";
 import SubTitle from "../components/SubTitle";
+import { useQuery } from "react-query";
 
 export default function RentalNoticeDetail() {
+  const { id } = useParams();
+  console.log(id);
+  const { data } = useQuery(["noticeDetail", id], RentalNoticeDetail);
+  console.log(data);
+
   return (
     <Layout>
       <SubTitle FirstTitle="관리자모드" SecondTitle="공지사항 상세보기" />
@@ -14,16 +20,14 @@ export default function RentalNoticeDetail() {
             <tbody>
               <tr>
                 <td className="table_td border-l-0" colSpan={4}>
-                  리액트 너무 재미있다.
+                  {data?.detail.title}
                 </td>
               </tr>
               <tr>
                 <td width="10%" className="table_td border-l-0">
                   작성일
                 </td>
-                <td width="40%" className="table_td border-l-0">
-                  6일 전
-                </td>
+                <td width="40%" className="table_td border-l-0"></td>
                 <td width="10%" className="table_td border-l-0">
                   조회수
                 </td>
