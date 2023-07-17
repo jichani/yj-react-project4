@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ButtonSlide from "../components/ButtonSlide";
 import Layout from "../components/Layout";
 import LayoutContents from "../components/LayoutContents";
@@ -40,7 +41,7 @@ export default function RentalNoticeWrite() {
               <td className={`${table_class_td}`}>
                 <textarea
                   rows={24}
-                  className="w-80 text-sm border border-neutral-300 focus:border-neutral-400 focus:ring-neutral-400 placeholder:text-neutral-300"
+                  className="w-full text-sm border border-neutral-300 focus:border-neutral-400 focus:ring-neutral-400 placeholder:text-neutral-300"
                 />
               </td>
             </tr>
@@ -48,7 +49,9 @@ export default function RentalNoticeWrite() {
         </table>
         <div className="w-full flex justify-center border-t border-neutral-300 py-8 space-x-2">
           <ButtonSlide text="작성하기" />
-          <ButtonSlide text="목록으로 가기" />
+          <Link to="/rental">
+            <ButtonSlide text="목록으로 가기" />
+          </Link>
         </div>
       </LayoutContents>
     </Layout>
