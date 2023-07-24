@@ -39,7 +39,9 @@ export default function Header() {
             </div>
             <div>Home</div>
             <div>login</div>
-            <div>join</div>
+            <Link to="/signup">
+              <div>join</div>
+            </Link>
             <select size="sm" className="border-neutral-300 px-2 text-sm rounded-sm py-1">
               <option>한국어</option>
               <option>English</option>
