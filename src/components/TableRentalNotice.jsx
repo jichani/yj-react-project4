@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function TableRentalNotice() {
   const { data } = useQuery("notices", rentalNotices);
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="w-full grid py-16">
