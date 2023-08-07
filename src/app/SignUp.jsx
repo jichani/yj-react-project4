@@ -18,6 +18,7 @@ export default function SignUp() {
     watch,
     formState: { errors },
   } = useForm({ mode: "onChange" });
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -44,11 +45,12 @@ export default function SignUp() {
     setAdressDetail(data.address);
   };
 
+  const { mutate } = useMutation(userRegister);
+
   const onSubmit = (data) => {
     console.log(data);
+    mutate(data);
   };
-
-  useMutation(userRegister);
 
   return (
     <Layout>
