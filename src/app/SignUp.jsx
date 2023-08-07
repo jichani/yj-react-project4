@@ -16,6 +16,7 @@ export default function SignUp() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
@@ -45,7 +46,11 @@ export default function SignUp() {
     setAdressDetail(data.address);
   };
 
-  const { mutate } = useMutation(userRegister);
+  const { mutate } = useMutation(userRegister, {
+    onSuccess: () => {
+      reset();
+    },
+  });
 
   const onSubmit = (data) => {
     console.log(data);
