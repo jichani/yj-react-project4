@@ -3,17 +3,21 @@ import ButtonSlide from "../components/ButtonSlide";
 import Layout from "../components/Layout";
 import LayoutContents from "../components/LayoutContents";
 import { useForm } from "react-hook-form";
-import Modal from "react-modal";
+import Model from "react-modal";
+import DaumPostcodeEmbed from "react-daum-postcode";
+import { useMutation } from "react-query";
+import { userRegister } from "../api";
 
 export default function SignUp() {
   const [modalIsOpen, setIsOpen] = useState(false);
-
+  const [zipcode, setZipcode] = useState("");
+  const [adressDetail, setAdressDetail] = useState("");
   const {
     register,
+    handleSubmit,
     watch,
     formState: { errors },
   } = useForm({ mode: "onChange" });
-
   const openModal = () => {
     setIsOpen(true);
   };
@@ -25,7 +29,7 @@ export default function SignUp() {
   const customStyles = {
     content: {
       width: "600px",
-      top: "30%",
+      top: "50%",
       left: "50%",
       right: "auto",
       bottom: "auto",
@@ -34,22 +38,41 @@ export default function SignUp() {
     },
   };
 
+  const handleComplete = (data) => {
+    setIsOpen(false);
+    setZipcode(data.zonecode);
+    setAdressDetail(data.address);
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  useMutation(userRegister);
+
   return (
     <Layout>
-      <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={closeModal}></Modal>
+      <Model isOpen={modalIsOpen} style={customStyles} onRequestClose={closeModal}>
+        <DaumPostcodeEmbed onComplete={handleComplete} />
+        <div className="flex justify-center">
+          <button onClick={closeModal} className="border border-neutral-300 px-4 py-1 rounded-md hover:text-neutral-700 hover:border-neutral-700">
+            close
+          </button>
+        </div>
+      </Model>
       <LayoutContents>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <table className="table_top w-full">
             <tbody>
               <tr>
-                <td className="table_td border-l-0">회원아이디</td>
+                <td className="table_td border-l-0">회원 아이디</td>
                 <td className="table_td border-l-0 space-x-2">
                   <input
                     {...register("username", {
                       required: "아이디는 필수 입력 항목입니다.",
                       minLength: {
                         value: 6,
-                        message: "아이디는 6자 이상 입력해야 합니다.",
+                        message: "아이디는 6자이상 입력해야 합니다.",
                       },
                     })}
                     type="text"
@@ -68,7 +91,7 @@ export default function SignUp() {
                 <td className="table_td border-l-0">비밀번호 확인</td>
                 <td className="table_td border-l-0 space-x-2">
                   <input {...register("password2")} type="password" className="border border-neutral-300 p-2" />
-                  {watch("password") !== watch("password2") && <span className="text-red-500 text-sm">비밀번호는 같아야 합니다.</span>}
+                  {watch("password") !== watch("password2") && <span className="text-red-500 text-sm">비밀번호가 같지 않습니다.</span>}
                 </td>
               </tr>
               <tr>
@@ -78,7 +101,7 @@ export default function SignUp() {
                 </td>
               </tr>
               <tr>
-                <td className="table_td border-l-0">휴대전화</td>
+                <td className="table_td border-l-0">전화번호</td>
                 <td className="table_td border-l-0">
                   <input {...register("mobile")} type="text" className="border border-neutral-300 p-2" />
                 </td>
@@ -88,14 +111,14 @@ export default function SignUp() {
                 <td className="table_td border-l-0 space-x-2">
                   <input
                     {...register("email", {
-                      required: "이메일 항목은 필수 입력 사항입니다.",
+                      required: "이메일 항목은 필수 입력사항입니다.",
                       minLength: {
                         value: 5,
                         message: "최소 5자 이상 작성해 주셔야 합니다.",
                       },
                       pattern: {
                         value: /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i,
-                        message: "이메일, 형식을 맞춰 주셔야 합니다.",
+                        message: "이메일 형식을 맞춰주세요.",
                       },
                     })}
                     type="email"
@@ -106,14 +129,14 @@ export default function SignUp() {
               </tr>
               <tr>
                 <td className="table_td border-l-0">주소</td>
-                <td>
+                <td className="table_td border-l-0">
                   <div className="space-x-1">
-                    <input {...register("zipcode")} disabled type="text" className="border border-neutral-300 p-2 bg-neutral-50" />
-                    <button onClick={openModal} type="button" className="px-4 py-2 rounded text-sm border border-neutral-300 hover:shadow-md">
-                      우편번호검색
+                    <input {...register("zipcode")} value={zipcode} disabled type="text" className="border border-neutral-300 p-2 bg-neutral-50" />
+                    <button onClick={openModal} type="button" className="px-4 py-2 rouned text-sm border border-neutral-300 hover:shadow-md">
+                      우편번호 검색
                     </button>
                   </div>
-                  <input {...register("address1")} type="text" disabled className="w-full border border-neutral-300 p-2 bg-neutral-50" />
+                  <input {...register("address1")} value={adressDetail} disabled type="text" className="w-full border border-neutral-300 p-2 bg-neutral-50" />
                   <input {...register("address2")} type="text" className="w-full border border-neutral-300 p-2" />
                 </td>
               </tr>
