@@ -8,6 +8,8 @@ import FacebookAsset from "../components/asset/FacebookAsset";
 import InstaAsset from "../components/asset/InstaAsset";
 import NaverAsset from "../components/asset/NaverAsset";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { userSignIn } from "../api";
 
 export default function SignIn() {
   const {
@@ -15,9 +17,14 @@ export default function SignIn() {
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange" });
+
+  const { mutate } = useMutation(userSignIn);
+
   const onSubmit = (data) => {
     console.log(data);
+    mutate(data);
   };
+
   return (
     <Layout>
       <LayoutContents>
