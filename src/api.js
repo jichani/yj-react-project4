@@ -60,5 +60,11 @@ export async function userSignIn(props) {
 }
 
 export async function loginSuccess() {
-
+  return await fetch(`${BASE_PATH}/api/users/login/success`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  }).then((res) => res.json());
 }
