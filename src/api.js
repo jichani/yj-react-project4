@@ -58,3 +58,7 @@ export async function userSignIn(props) {
     body: JSON.stringify(props),
   }).then((res) => res.json());
 }
+
+export async function loginSuccess() {
+
+}
