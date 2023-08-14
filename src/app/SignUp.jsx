@@ -7,11 +7,13 @@ import Model from "react-modal";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { useMutation } from "react-query";
 import { userRegister } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [zipcode, setZipcode] = useState("");
   const [adressDetail, setAdressDetail] = useState("");
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -49,6 +51,7 @@ export default function SignUp() {
   const { mutate } = useMutation(userRegister, {
     onSuccess: () => {
       reset();
+      navigate("/");
     },
   });
 

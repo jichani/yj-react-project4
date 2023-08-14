@@ -38,7 +38,9 @@ export default function Header() {
               <SearchAsset />
             </div>
             <div>Home</div>
-            <div>login</div>
+            <Link to="/signin">
+              <div>login</div>
+            </Link>
             <Link to="/signup">
               <div>join</div>
             </Link>
