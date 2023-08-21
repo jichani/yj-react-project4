@@ -13,13 +13,14 @@ const GNB = [
   { mainTitle: "대구엑스포", subTitle: "Contact", link: "./contact" },
 ];
 export default function Header() {
-  const { userLoading, isLoggedIn, user, refetch } = useUser();
+  const { isLoggedIn, user, refetch } = useUser();
   const onLogout = async () => {
     await logout();
+    alert("로그아웃");
     refetch();
   };
 
-  console.log(userLoading, isLoggedIn, user);
+  // console.log(isLoggedIn, user);
   return (
     <div className="w-full flex justify-center h-header-height shadow-md">
       {/* 좌우 여백을 위한 박스 */}
