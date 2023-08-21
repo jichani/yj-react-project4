@@ -13,9 +13,9 @@ export default function KakaoConfirm() {
 
   const confirmLogin = async () => {
     if (code) {
-      const status = kakaoLogin(code);
+      const status = await kakaoLogin(code);
 
-      if (status.ok) {
+      if (status.ok === "true") {
         navigate("/");
       }
     }
