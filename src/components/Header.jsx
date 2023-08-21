@@ -19,8 +19,6 @@ export default function Header() {
     alert("로그아웃");
     refetch();
   };
-
-  // console.log(isLoggedIn, user);
   return (
     <div className="w-full flex justify-center h-header-height shadow-md">
       {/* 좌우 여백을 위한 박스 */}
@@ -50,6 +48,10 @@ export default function Header() {
             {isLoggedIn === "true" ? (
               <>
                 <div>{user.email}</div>
+                <div className="w-8 h-8 rounded-full bg-slate-900 overflow-hidden">
+                  {console.log(user)}
+                  <img src={user.avatar} alt="profile" />
+                </div>
                 <div onClick={onLogout}>logout</div>
               </>
             ) : (
