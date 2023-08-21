@@ -2,21 +2,26 @@ import { Link } from "react-router-dom";
 import LogoAsset from "./asset/logoAsset";
 import SearchAsset from "./asset/SearchAsset";
 import useUser from "../hooks/useUser";
+import { logout } from "../api";
 
 const GNB = [
-  { mainTitle: "공연안내", subTitle: "Performance", link: "/information" },
-  { mainTitle: "공간 대관안내", subTitle: "Rental", link: "/rental" },
-  { mainTitle: "멤버쉽", subTitle: "Membership", link: "/membership" },
-  { mainTitle: "아카데미", subTitle: "Academy", link: "/academy" },
-  { mainTitle: "커뮤니티", subTitle: "Community", link: "/community" },
-  { mainTitle: "대구엑스포", subTitle: "Contact", link: "/contact" },
+  { mainTitle: "공연안내", subTitle: "Performance", link: "./information" },
+  { mainTitle: "공연 대관안내", subTitle: "Rental", link: "./rental" },
+  { mainTitle: "멤버쉽", subTitle: "Membership", link: "./membership" },
+  { mainTitle: "아카데미", subTitle: "Academy", link: "./academy" },
+  { mainTitle: "커뮤니티", subTitle: "Community", link: "./community" },
+  { mainTitle: "대구엑스포", subTitle: "Contact", link: "./contact" },
 ];
-
 export default function Header() {
-  const { userLoading, isLoggedIn, user } = useUser();
+  const { userLoading, isLoggedIn, user, refetch } = useUser();
+  const onLogout = async () => {
+    await logout();
+    refetch();
+  };
+
   console.log(userLoading, isLoggedIn, user);
   return (
-    <div className="w-full flex justify-center h-header-height shadow-md ">
+    <div className="w-full flex justify-center h-header-height shadow-md">
       {/* 좌우 여백을 위한 박스 */}
       <div className="w-full flex justify-center px-layout-padding">
         <div className="w-full flex justify-center relative">
@@ -31,7 +36,7 @@ export default function Header() {
               </Link>
             ))}
           </div>
-          {/* 로고 */}
+          {/* LOGO */}
           <div className="absolute left-0 h-full flex items-center">
             <LogoAsset width="w-48" />
           </div>
@@ -43,21 +48,21 @@ export default function Header() {
             <div>Home</div>
             {isLoggedIn === "true" ? (
               <>
-                <div>{user.name}</div>
-                <div>로그아웃</div>
+                <div>{user.email}</div>
+                <div onClick={onLogout}>logout</div>
               </>
             ) : (
               <>
                 <Link to="/signin">
-                  <div>login</div>
+                  <div>Login</div>
                 </Link>
                 <Link to="/signup">
-                  <div>join</div>
+                  <div>Join</div>
                 </Link>
               </>
             )}
 
-            <select size="sm" className="border-neutral-300 px-2 text-sm rounded-sm py-1">
+            <select size="sm" className="border border-neutral-300 text-sm rounded-sm px-2 py-1">
               <option>한국어</option>
               <option>English</option>
             </select>

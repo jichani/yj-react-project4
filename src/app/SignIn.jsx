@@ -10,6 +10,7 @@ import NaverAsset from "../components/asset/NaverAsset";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { userSignIn } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const {
@@ -18,7 +19,15 @@ export default function SignIn() {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const { mutate } = useMutation(userSignIn);
+  const navigate = useNavigate();
+  const { data, mutate } = useMutation(userSignIn);
+
+  if (data?.ok === "false") {
+    console.log("로그인 에러");
+  }
+  if (data?.ok === "true") {
+    navigate("/");
+  }
 
   const onSubmit = (data) => {
     console.log(data);
